@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>    
+    <nav class="nav">
+    <a href="/" class="nav__link" data-link>Dashboard</a>
+    <a href="/Authors" class="nav__link" data-link>Authors</a>
+    <a href="/posts" class="nav__link" data-link>Posts</a>
+    <a href="/settings" class="nav__link" data-link>Settings</a>
+    </nav>
+    <div id="app"></div>
+    <script type="module" src="index.js"></script>
+    <script>
+        function clickHandler() {
+            let fname =document.getElementById("firstname").value ;
+            let lname =document.getElementById("lastname").value ;
+            const dataToSent = {
+                name : fname,
+                surname : lname
+            }
+            const options =     {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSent)
+        };
+        fetch('/addNewAuthor',options)
+        }
+    </script>
+</body>
+</html>
