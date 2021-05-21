@@ -15,7 +15,7 @@ export default class extends AbstractView {
             <input type="text" id="firstname" name="firstname" value="John" ><br>
             <label for="lastname">Last name:</label><br>
             <input type="text" id="lastname" name="lastname" value="Doe" ><br><br>
-            <button type="button" onclick="addAuthor()" >Click Me!</button>
+            <button type="button" onclick="addAuthor()" >Add!</button>
 
         `;
     }

@@ -1,12 +1,11 @@
 import Dashboard from "./views/Dashboard.js";
-import Posts from "./views/Posts.js";
-import PostView from "./views/PostView.js";
 import Books from "./views/Books.js";
 import AddBook from "./views/AddBook.js";
 import Authors from "./views/Authors.js";
 import AddAuthor from "./views/AddAuthor.js";
 import DeleteAuthor from "./views/DeleteAuthor.js";
 import DeleteBook from "./views/DeleteBook.js";
+import Search from "./views/Search.js"
 
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
@@ -27,14 +26,13 @@ const navigateTo = url => {
 const router = async () => {
     const routes = [
         { path: "/", view: Dashboard },
-        { path: "/posts", view: Posts },
-        { path: "/posts/:id", view: PostView },
         { path: "/Books", view: Books },
         { path: "/Authors", view: Authors },
         { path: "/AddAuthor", view: AddAuthor },
         { path: "/AddBook", view: AddBook },
         { path: "/DeleteAuthor", view: DeleteAuthor },
-        { path: "/DeleteBook", view: DeleteBook }
+        { path: "/DeleteBook", view: DeleteBook },
+        { path: "/Search", view: Search }
     ];
 
 

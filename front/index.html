@@ -11,8 +11,8 @@
     <nav class="nav">
     <a href="/" class="nav__link" data-link>Dashboard</a>
     <a href="/Authors" class="nav__link" data-link>Authors</a>
-    <a href="/posts" class="nav__link" data-link>Posts</a>
     <a href="/Books" class="nav__link" data-link>Books</a>
+    <a href="/Search" class="nav__link" data-link>Search</a>
     </nav>
     <div id="app"></div>
     <script type="module" src="index.js"></script>
@@ -34,11 +34,18 @@
         fetch('/addNewAuthor',options)
         }
 
-        function addBook(){
+        function addBook(modify){
+            console.log(modify)
             let title =  document.getElementById("title").value ;
             let pages =  document.getElementById("pages").value ;
             let date =  document.getElementById("date").value ;
-            
+            let modifyID = ''
+            if(modify){ 
+                let bk = document.getElementById("bookToDelete").value ;                
+                 const words = bk.split(' ');
+                  modifyID = words[words.length - 1];
+        }
+
             //adding authors
             let authors = new Array()
           for(let i =1; i <= 3; i++){  
@@ -55,6 +62,7 @@
                 date: date,
                 authors: authors
             }
+            if(modify) dataToSent.id = modifyID;
             const options =     {
             method: 'POST',
             headers: {
@@ -62,7 +70,10 @@
             },
             body: JSON.stringify(dataToSent)
         };
-        fetch('/addNewBook',options)
+        if(modify){
+            fetch('/modifyBook',options)
+        }
+        else fetch('/addNewBook',options)
             
         }
 
@@ -100,7 +111,98 @@
         };
         fetch('/deleteBook',options)
         }
+
+       async function search(){
+            let searchOption = document.getElementById("searchOption").value;
+            let filter = document.getElementById("search").value.toLowerCase();
+            let result = document.getElementById("result");
+            result.innerText =''
+            
+                let books = await requestBooks();
+                let authors = await requestAuthors();
+
+                for(let i = 0; i < books.length; i++){
+
+                    let thisBookAuthors = ''
+                    for(let j=0; j < 3; j++){
+                        if(books[i].authors[j] != null){
+                            for(let k=0; k < authors.length; k++){
+                                if(authors[k].id == books[i].authors[j]){
+                                    thisBookAuthors += authors[k].name+" ";
+                                    thisBookAuthors += authors[k].surname + ", ";
+                                }
+                            }
+                        }
+                    }
+
+                    let bookInfo = ''
+                    bookInfo += books[i].title +" "
+                    bookInfo +="Authors:"+thisBookAuthors+" "
+                    bookInfo +="Creation date:"+books[i].date+" "
+                    bookInfo += "Pages:"+books[i].pages + "\n"
+
+                    let title = books[i].title
+                    if (searchOption == 'title' && title.toLowerCase().indexOf(filter) > -1){
+                        result.innerText +=bookInfo;
+                    }
+                    if (searchOption == 'author' && thisBookAuthors.toLowerCase().indexOf(filter) > -1){
+                        result.innerText +=bookInfo;
+                    }
+                    if (searchOption == 'date' && books[i].date.toLowerCase().indexOf(filter) > -1){
+                        result.innerText +=bookInfo;
+                    }
+                }
+            
+        }
+
+ function sortList() { //not working yet
+  var list, i, switching, b, shouldSwitch;
+  list = document.getElementById("list");
+  switching = true;
+  while (switching) {
+    switching = false;
+    b = list.getElementsByTagName("DT");
+    c = list.getElementsByTagName("DD");
+    for (i = 0; i < (b.length - 1); i++) {
+      shouldSwitch = false;
+      if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      b[i].parentNode.insertBefore(b[i + 1], b[i]);
+      c[i].parentNode.insertBefore(c[i + 1], c[i]);
+      switching = true;
+    }
+  }
+}
         
+function requestAuthors() {
+    return new Promise(function(resolve, reject) {
+    const url = `http://localhost:8080/listAuthors`;
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        const data = JSON.parse(this.responseText);      
+        resolve(data)
+      };
+      xhr.onerror = reject;
+      xhr.open('GET', url);
+      xhr.send();
+    });
+  }function requestBooks() {
+    return new Promise(function(resolve, reject) {
+    const url = `http://localhost:8080/listBooks`;
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        const data = JSON.parse(this.responseText);      
+        resolve(data)
+      };
+      xhr.onerror = reject;
+      xhr.open('GET', url);
+      xhr.send();
+    });
+  }
     </script>
 </body>
 </html>

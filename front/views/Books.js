@@ -41,6 +41,7 @@ export default class extends AbstractView {
 
         return `
             <h1>Books</h1>
+            <button onclick ="sortList()">Sort</button>
             <div id ='list'> 
             <dl>
             `
@@ -49,8 +50,8 @@ export default class extends AbstractView {
             </dl>
             </div>
             <div id="adding"> <a id ="addLink" color = "blue" href="/AddBook" class="nav__link" data-link>Add new book</a></div>
-            <div id="deleting"> <a id ="addLink" color = "blue" href="/DeleteBook" class="nav__link" data-link>Delete book</a></div>
-            
+            <div id="deleting"> <a id ="addLink" color = "blue" href="/DeleteBook" class="nav__link" data-link>Modify book</a></div>
+
         `;
     }
 }

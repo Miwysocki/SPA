@@ -42,13 +42,28 @@ app.post("/addNewBook",(req, res)=>{
         let i=0
         for(i; i < arr.length; i++){
         }
-       arr[i] = req.body;
-       // console.log("arr1 "+arr[i] )          
+       arr[i] = req.body;     
         arr[i].id = Date.now();
         fs.writeFileSync( __dirname + "/" + "books.json", JSON.stringify(arr))  
     });
     res.end()
 });
+
+app.post("/modifyBook",(req, res)=>{
+    let arr = new Array()
+    fs.readFile( __dirname + "/" + "books.json", 'utf8', function (err, data) {
+        arr = JSON.parse(data);     
+        let i=0
+        for(i; i < arr.length; i++){
+            if(arr[i].id == req.body.id){
+                arr[i] = req.body;
+            }
+        }
+        fs.writeFileSync( __dirname + "/" + "books.json", JSON.stringify(arr))  
+    });
+    res.end()
+});
+
 
 
 app.post("/addNewAuthor",(req, res)=>{
