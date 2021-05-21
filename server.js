@@ -38,7 +38,6 @@ app.post("/addNewAuthor",(req, res)=>{
     let arr = new Array()
     fs.readFile( __dirname + "/" + "authors.json", 'utf8', function (err, data) {
         arr = JSON.parse(data);     ;
-       // console.log("test data " + data)
        let i = 0;
        let alradyExist = false
         for(i; i < arr.length; i++){
@@ -48,7 +47,25 @@ app.post("/addNewAuthor",(req, res)=>{
             }
         }
         arr[i] = req.body;
+        arr[i].id = Date.now();
         if(!alradyExist) fs.writeFileSync( __dirname + "/" + "authors.json", JSON.stringify(arr))
         });
     res.end()
 });
+
+app.delete('/deleteAuthor', function (req, res) {
+    //deleting
+    fs.readFile( __dirname + "/" + "authors.json", 'utf8', function (err, data) {
+        arr = JSON.parse(data);
+        let i = 0;
+         for(i; i < arr.length; i++){
+             if(arr[i].id == req.body.id){
+                 console.log("deleting: "+ arr[i].name);
+                 arr.splice(i,1);
+             }
+         }
+        fs.writeFileSync( __dirname + "/" + "authors.json", JSON.stringify(arr))
+        });
+    
+    res.send('Got a DELETE request at /deleteAuthor')
+  })

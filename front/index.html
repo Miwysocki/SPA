@@ -17,7 +17,7 @@
     <div id="app"></div>
     <script type="module" src="index.js"></script>
     <script>
-        function clickHandler() {
+        function addAuthor() {
             let fname =document.getElementById("firstname").value ;
             let lname =document.getElementById("lastname").value ;
             const dataToSent = {
@@ -32,6 +32,24 @@
             body: JSON.stringify(dataToSent)
         };
         fetch('/addNewAuthor',options)
+        }
+
+
+        function deleteAuthor(){
+             let aut = document.getElementById("authorToDelete").value ;
+             const words = aut.split(' ');
+             let idToDelete = words[2]
+             const dataToSent = {
+                id : idToDelete,
+            }
+             const options =     {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSent)
+        };
+        fetch('/deleteAuthor',options)
         }
     </script>
 </body>

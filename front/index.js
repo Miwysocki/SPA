@@ -5,6 +5,7 @@ import Settings from "./views/Settings.js";
 
 import Authors from "./views/Authors.js";
 import AddAuthor from "./views/AddAuthor.js";
+import DeleteAuthor from "./views/DeleteAuthor.js";
 
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
 
@@ -29,7 +30,8 @@ const router = async () => {
         { path: "/posts/:id", view: PostView },
         { path: "/settings", view: Settings },
         { path: "/Authors", view: Authors },
-        { path: "/AddAuthor", view: AddAuthor }
+        { path: "/AddAuthor", view: AddAuthor },
+        { path: "/DeleteAuthor", view: DeleteAuthor }
     ];
 
 
