@@ -1,8 +1,8 @@
 import Dashboard from "./views/Dashboard.js";
 import Posts from "./views/Posts.js";
 import PostView from "./views/PostView.js";
-import Settings from "./views/Settings.js";
-
+import Books from "./views/Books.js";
+import AddBook from "./views/AddBook.js";
 import Authors from "./views/Authors.js";
 import AddAuthor from "./views/AddAuthor.js";
 import DeleteAuthor from "./views/DeleteAuthor.js";
@@ -28,9 +28,10 @@ const router = async () => {
         { path: "/", view: Dashboard },
         { path: "/posts", view: Posts },
         { path: "/posts/:id", view: PostView },
-        { path: "/settings", view: Settings },
+        { path: "/Books", view: Books },
         { path: "/Authors", view: Authors },
         { path: "/AddAuthor", view: AddAuthor },
+        { path: "/AddBook", view: AddBook },
         { path: "/DeleteAuthor", view: DeleteAuthor }
     ];
 

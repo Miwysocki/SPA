@@ -1,6 +1,5 @@
 const  express = require("express");
 const  path = require("path");
-//const bodyParser = require('body-parser');
 var fs = require("fs");
 
 const app = express()
@@ -10,15 +9,18 @@ app.use(express.json())
 app.use(express.urlencoded({
     extended: true
   }))
- // app.use(bodyParser.urlencoded({extended : true    }))
 
 
 app.get("/*", (req, res) => {
         if(req.path == '/listAuthors') {
-           // console.log("list authors ... ")
             fs.readFile( __dirname + "/" + "authors.json", 'utf8', function (err, data) {
             res.end( data );
             });
+        }
+        else if(req.path == '/listBooks'){
+            fs.readFile( __dirname + "/" + "books.json", 'utf8', function (err, data) {
+                res.end( data );
+                });
         }
         else
              res.sendFile(path.resolve(__dirname, "front", "index.html"));
@@ -30,6 +32,21 @@ app.listen(process.env.PORT || 8080, () => console.log("Server running..."));
 app.post("/add",(req, res)=>{
     console.log(req.body);
     authors = req.body
+    res.end()
+});
+
+app.post("/addNewBook",(req, res)=>{
+    let arr = new Array()
+    fs.readFile( __dirname + "/" + "books.json", 'utf8', function (err, data) {
+        arr = JSON.parse(data);     
+        let i=0
+        for(i; i < arr.length; i++){
+        }
+       arr[i] = req.body;
+       // console.log("arr1 "+arr[i] )          
+       // arr[arr.length].id = Date.now();
+        fs.writeFileSync( __dirname + "/" + "books.json", JSON.stringify(arr))  
+    });
     res.end()
 });
 

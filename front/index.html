@@ -12,7 +12,7 @@
     <a href="/" class="nav__link" data-link>Dashboard</a>
     <a href="/Authors" class="nav__link" data-link>Authors</a>
     <a href="/posts" class="nav__link" data-link>Posts</a>
-    <a href="/settings" class="nav__link" data-link>Settings</a>
+    <a href="/Books" class="nav__link" data-link>Books</a>
     </nav>
     <div id="app"></div>
     <script type="module" src="index.js"></script>
@@ -32,6 +32,38 @@
             body: JSON.stringify(dataToSent)
         };
         fetch('/addNewAuthor',options)
+        }
+
+        function addBook(){
+            let title =  document.getElementById("title").value ;
+            let pages =  document.getElementById("pages").value ;
+            let date =  document.getElementById("date").value ;
+            
+            //adding authors
+            let authors = new Array()
+          for(let i =1; i <= 3; i++){  
+              let aut = document.getElementById("author"+i).value ;
+             const words = aut.split(' ');
+             let authorID = words[2]
+                if(authorID != '666'){
+                    authors.push(authorID)
+                }
+            }
+            const dataToSent = {
+                title: title,
+                pages: pages,
+                date: date,
+                authors: authors
+            }
+            const options =     {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSent)
+        };
+        fetch('/addNewBook',options)
+            
         }
 
 

@@ -11,19 +11,19 @@ export default class extends AbstractView {
 
     async getHtml() {
         
-        let authors = await requestAuthors();
+        let books = await requestBooks();
 
 
         let listHTML = ''
 
-        for(let i=0; i < authors.length; i++){
+        for(let i=0; i < books.length; i++){
             listHTML += "<li> "
-            listHTML += authors[i].name + " " + authors[i].surname
+            listHTML += books[i].title 
             listHTML += " </li> \n"
         }        
 
         return `
-            <h1>Authors</h1>
+            <h1>Books</h1>
             <div id ='list'> 
             <ul>
             `
@@ -31,16 +31,16 @@ export default class extends AbstractView {
             `
             </ul>
             </div>
-            <div id="adding"> <a id ="addLink" color = "blue" href="/AddAuthor" class="nav__link" data-link>Add new author</a></div>
+            <div id="adding"> <a id ="addLink" color = "blue" href="/AddBook" class="nav__link" data-link>Add new book</a></div>
             <div id="deleting"> <a id ="addLink" color = "blue" href="/DeleteAuthor" class="nav__link" data-link>Delete an author</a></div>
             
         `;
     }
 }
 
-function requestAuthors() {
+function requestBooks() {
     return new Promise(function(resolve, reject) {
-    const url = `http://localhost:8080/listAuthors`;
+    const url = `http://localhost:8080/listBooks`;
       var xhr = new XMLHttpRequest();
       xhr.onload = function() {
         const data = JSON.parse(this.responseText);      
@@ -51,6 +51,9 @@ function requestAuthors() {
       xhr.send();
     });
   }
+
+
+
 
 
 
