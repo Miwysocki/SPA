@@ -44,7 +44,7 @@ app.post("/addNewBook",(req, res)=>{
         }
        arr[i] = req.body;
        // console.log("arr1 "+arr[i] )          
-       // arr[arr.length].id = Date.now();
+        arr[i].id = Date.now();
         fs.writeFileSync( __dirname + "/" + "books.json", JSON.stringify(arr))  
     });
     res.end()
@@ -82,6 +82,22 @@ app.delete('/deleteAuthor', function (req, res) {
              }
          }
         fs.writeFileSync( __dirname + "/" + "authors.json", JSON.stringify(arr))
+        });
+    
+    res.send('Got a DELETE request at /deleteAuthor')
+  })
+
+  app.delete('/deleteBook', function (req, res) {
+    //deleting
+    fs.readFile( __dirname + "/" + "books.json", 'utf8', function (err, data) {
+        arr = JSON.parse(data);
+        let i = 0;
+         for(i; i < arr.length; i++){
+             if(arr[i].id == req.body.id){
+                 arr.splice(i,1);
+             }
+         }
+        fs.writeFileSync( __dirname + "/" + "books.json", JSON.stringify(arr))
         });
     
     res.send('Got a DELETE request at /deleteAuthor')

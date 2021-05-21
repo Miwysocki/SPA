@@ -83,6 +83,24 @@
         };
         fetch('/deleteAuthor',options)
         }
+
+        function deleteBook(){
+            let bk = document.getElementById("bookToDelete").value ;
+            const words = bk.split(' ');
+             let idToDelete = words[1]
+             const dataToSent = {
+                id : idToDelete,
+            }
+             const options =     {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSent)
+        };
+        fetch('/deleteBook',options)
+        }
+        
     </script>
 </body>
 </html>
